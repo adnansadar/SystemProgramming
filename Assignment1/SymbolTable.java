@@ -55,26 +55,19 @@ public class SymbolTable {
 		}
 
 		// Printing the Symbol Table
-
 		ST.put("Literal", LiteralList);
 		ST.put("Size", SizeList);
 		ST.put("Address", AddressList);
-		Iterator<String> itr1 = ST.keySet().iterator();
-		while (itr1.hasNext()) {
-			System.out.print(itr1.next() + "\t\t");
-		}
+		System.out.println("Literal\t\tSize\t\tAddress");
 		Iterator<Object> itr2 = LiteralList.iterator();
 		Iterator<Object> itr3 = SizeList.iterator();
 		Iterator<Object> itr4 = AddressList.iterator();
-		System.out.println();
 		while (itr2.hasNext() && itr3.hasNext() && itr4.hasNext()) {
 			System.out.println(itr2.next() + "\t\t" + itr3.next() + "\t\t" + itr4.next());
-
 		}
 		while (itr2.hasNext()) {
 			System.out.println(itr2.next());
 		}
-
 		sc.close();
 	}
 }
