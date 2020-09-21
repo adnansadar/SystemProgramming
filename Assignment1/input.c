@@ -1,6 +1,7 @@
 #include<stdio.h>
 void main()
 {
+char v;   
 int a,b,c;
 char d;
 float f;

@@ -14,8 +14,8 @@ Add one
 Store count
 Sub N
 Jz Outer
-Jmp Loop
-Outer: Write sum
+Outer: Jmp Loop
+Write sum
 Stop
 Endp
 zero Const
