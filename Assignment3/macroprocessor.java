@@ -13,6 +13,7 @@ public class macroprocessor {
         HashMap<String, List<Object>> ALA = new HashMap<String, List<Object>>();
         List<Object> MNTIndexList = new ArrayList<Object>();
         List<Object> MacroNameList = new ArrayList<Object>();
+        List<Object> MNTMDTIndexList = new ArrayList<Object>();
 
         List<Object> FormalArgsList = new ArrayList<Object>();
         List<Object> PositionalArgsList = new ArrayList<Object>();
@@ -28,16 +29,13 @@ public class macroprocessor {
             String line = sc.nextLine();
             String[] words = line.split(" ");
             if (line.startsWith("MACRO")) {
-                MNTIndexList.add(MNTindex);
-                MNTindex++;
-                MacroNameList.add(sc.next());
-                MDTIndexList.add(MDTindex);
                 int position = 1;
                 for (String word : words) {
                     if (word.equals("MACRO")) {
                         MNTIndexList.add(MNTindex);
+                        MNTMDTIndexList.add(MDTindex);
                         MNTindex++;
-                        MacroNameList.add(sc.next());
+                        MacroNameList.add(words[2]);
                     } else if (word.startsWith("&")) {
                         FormalArgsList.add(word);
                         PositionalArgsList.add("#" + position);
@@ -50,23 +48,23 @@ public class macroprocessor {
                     MDTindex++;
                     MDTCardList.add(line);
                 }
-            } 
-        }//End of First Pass
+            }
+        } // End of First Pass
         MNT.put("Index", MNTIndexList);
         MNT.put("Macro Name", MacroNameList);
-        MNT.put("MDT Index", MDTIndexList);
+        MNT.put("MDT Index", MNTMDTIndexList);
         ALA.put("Macro Name", MacroNameList);
         ALA.put("Formal Args", FormalArgsList);
         ALA.put("Positional Args", PositionalArgsList);
         ALA.put("Actual Args", ActualArgsList);
         MDT.put("Index", MDTIndexList);
         MDT.put("Card", MDTCardList);
-        System.out.println(MNT);
-        System.out.println(ALA);
-        System.out.println(MDT);
-        // Scanner sc2 = new Scanner(fr);
-        // while (condition) {
-            
-        // }
+        System.out.println("MNT:\n" + MNT);
+        System.out.println("ALA:\n" + ALA);
+        System.out.println("MDT:\n" + MDT);
     }
+
+    // 2nd Pass of Macroprocessor
+    
+
 }
