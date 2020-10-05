@@ -39,11 +39,24 @@ public class macroprocessor {
                     } else if (word.startsWith("&")) {
                         FormalArgsList.add(word);
                         PositionalArgsList.add("#" + position);
+                        ActualArgsList.add("");
                         position++;
                     }
                 }
                 while (!line.startsWith("MEND")) {
                     line = sc.nextLine();
+                    // if(line.contains("&"))
+                    // {
+                    //     Object[] linesplit = line.split(" ");
+                    //     for (int string=0; string<linesplit.length; string++) {
+                    //         if(((String) linesplit[string]).contains("&"))
+                    //         {
+                    //             int index=FormalArgsList.indexOf(string);
+                    //             Object positionalarg = PositionalArgsList.get(index);
+                    //             linesplit[string] = positionalarg;
+                    //         }
+                    //     }
+                    // }
                     MDTIndexList.add(MDTindex);
                     MDTindex++;
                     MDTCardList.add(line);
@@ -62,9 +75,37 @@ public class macroprocessor {
         System.out.println("MNT:\n" + MNT);
         System.out.println("ALA:\n" + ALA);
         System.out.println("MDT:\n" + MDT);
+
+        // 2nd Pass of Macroprocessor
+        FileReader fr2 = new FileReader("input.c");
+        Scanner sc2 = new Scanner(fr2);
+        while (sc2.hasNextLine()) {
+            String line = sc2.nextLine();
+            String[] words = line.split(" ");
+            int word = 0;
+            if(MacroNameList.contains(words[word]))
+            {
+                int startindex = words[word].length()+2;
+                String Actualargs = line.substring(startindex);
+                String [] ActualArgs = Actualargs.split(" ");
+                int ActualArgsIndex = MacroNameList.indexOf(words[word]);
+                for (String i : ActualArgs) {
+                    ActualArgsList.set(ActualArgsIndex, i);
+                    ActualArgsIndex++;
+                }
+            }
+        }
+        MNT.put("Index", MNTIndexList);
+        MNT.put("Macro Name", MacroNameList);
+        MNT.put("MDT Index", MNTMDTIndexList);
+        ALA.put("Macro Name", MacroNameList);
+        ALA.put("Formal Args", FormalArgsList);
+        ALA.put("Positional Args", PositionalArgsList);
+        ALA.put("Actual Args", ActualArgsList);
+        MDT.put("Index", MDTIndexList);
+        MDT.put("Card", MDTCardList);
+        System.out.println("MNT:\n" + MNT);
+        System.out.println("ALA:\n" + ALA);
+        System.out.println("MDT:\n" + MDT);
     }
-
-    // 2nd Pass of Macroprocessor
-    
-
 }

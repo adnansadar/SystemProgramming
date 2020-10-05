@@ -9,5 +9,5 @@ LOAD  &X2
 LOAD  &X3
 MEND
 WXY  2, 3, 4
-EFG 10
+EFG  10
 END
