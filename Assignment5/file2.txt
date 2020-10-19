@@ -1,0 +1,9 @@
+﻿#include<stdio.h>
+
+main()
+{
+extern float f1,f2;
+extern char c1;
+int no1,no2;
+}
+

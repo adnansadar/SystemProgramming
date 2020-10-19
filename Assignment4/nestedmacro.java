@@ -4,7 +4,7 @@ import java.io.*;
 /**
  * macroprocessor
  */
-public class macroprocessor {
+public class nestedmacro {
     public static void main(String[] args) throws IOException {
         FileReader fr = new FileReader("input.c");
         Scanner sc = new Scanner(fr);
@@ -64,7 +64,7 @@ public class macroprocessor {
                 }
             }
         } // End of First Pass
-        System.out.println("\nAfter 1st Pass:");
+        System.out.println("\n****************After 1st Pass:******************");
         MNT.put("Index", MNTIndexList);
         MNT.put("Macro Name", MacroNameList);
         MNT.put("MDT Index", MNTMDTIndexList);
@@ -121,7 +121,7 @@ public class macroprocessor {
                 }
             }
         } // End of Pass 2
-        System.out.println("\nAfter 2nd Pass:");
+        System.out.println("\n***************After 2nd Pass:***************");
         MNT.put("Index", MNTIndexList);
         MNT.put("Macro Name", MacroNameList);
         MNT.put("MDT Index", MNTMDTIndexList);
@@ -136,7 +136,7 @@ public class macroprocessor {
         System.out.println("MDT:\n" + MDT);
 
         // Expanded Code
-        System.out.println("\n\nExpanded Code:");
+        System.out.println("\n\n*****************Expanded Code:*********************");
         FileReader frnew = new FileReader("input.c");
         Scanner scnew = new Scanner(frnew);
         int count = 0;
@@ -148,7 +148,18 @@ public class macroprocessor {
                     line = scnew.nextLine();
                     String[] linesplit = line.split(" ");
                     for (int i = 0; i < linesplit.length; i++) {
-                        if (linesplit[i].equals("MEND")) {
+                        if(MacroNameList.contains(linesplit[i]))
+                        {
+                            for (int j = 0; j < 6; j++) {
+                                if(j==3)
+                                    System.out.println();
+                                System.out.print(MDTCardList.get(j)+" " );
+                            }
+                            count+=3;
+                            i=linesplit.length;      
+                            continue;
+                        }
+                        else if (linesplit[i].equals("MEND")) {
                             count += 1;
                             continue;
                         }
