@@ -1,10 +1,12 @@
-#include<stdio.h>
+#include<stdlib.h>
 
-int main()
+void calculate()
 {
+    
 int a,b,c,d;
-a = 10;
-b = 14;
+int r;
+a = 5;
+b = 4;
 c = a + b;
 d = b - a;
 }

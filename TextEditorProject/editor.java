@@ -1,46 +1,34 @@
+
 // TEXT EDITOR
-import java.awt.*;
 import javax.swing.*;
 import java.io.*;
 import java.awt.event.*;
 import javax.swing.plaf.metal.*;
-import javax.swing.text.*;
 
 class editor extends JFrame implements ActionListener {
-	/**
-	 *
-	 */
+
 	private static final long serialVersionUID = 1L;
-
-	// Text component
-	JTextArea t;
-
-	// Frame
-	JFrame f;
+	JTextArea t; // Text component
+	JFrame f; // Frame
 
 	// Constructor
 	editor() {
 		// Create a frame
 		f = new JFrame("editor");
-
 		try {
-			// Set metl look and feel
+			// Set metal look and feel
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-
 			// Set theme to ocean
 			MetalLookAndFeel.setCurrentTheme(new OceanTheme());
 		} catch (Exception e) {
+			System.out.println("Error Loading the UI!");
 		}
-
 		// Text component
 		t = new JTextArea();
-
 		// Create a menubar
 		JMenuBar mb = new JMenuBar();
-
 		// Create amenu for menu
 		JMenu m1 = new JMenu("File");
-
 		// Create menu items
 		JMenuItem mi1 = new JMenuItem("New");
 		JMenuItem mi2 = new JMenuItem("Open");
@@ -89,102 +77,104 @@ class editor extends JFrame implements ActionListener {
 		f.setVisible(true);
 	}
 
-// 	// If a button is pressed
-// 	public void actionPerformed(ActionEvent e) {
-// 		String s = e.getActionCommand();
-
-// 		if (s.equals("cut")) {
-// 			t.cut();
-// 		} else if (s.equals("copy")) {
-// 			t.copy();
-// 		} else if (s.equals("paste")) {
-// 			t.paste();
-// 		} else if (s.equals("Save")) {
-// 			// Create an object of JFileChooser class
-// 			JFileChooser j = new JFileChooser("f:");
-
-// 			// Invoke the showsSaveDialog function to show the save dialog
-// 			int r = j.showSaveDialog(null);
-
-// 			if (r == JFileChooser.APPROVE_OPTION) {
-
-// 				// Set the label to the path of the selected directory
-// 				File fi = new File(j.getSelectedFile().getAbsolutePath());
-
-// 				try {
-// 					// Create a file writer
-// 					FileWriter wr = new FileWriter(fi, false);
-
-// 					// Create buffered writer to write
-// 					BufferedWriter w = new BufferedWriter(wr);
-
-// 					// Write
-// 					w.write(t.getText());
-
-// 					w.flush();
-// 					w.close();
-// 				} catch (Exception evt) {
-// 					JOptionPane.showMessageDialog(f, evt.getMessage());
-// 				}
-// 			}
-// 			// If the user cancelled the operation
-// 			else
-// 				JOptionPane.showMessageDialog(f, "the user cancelled the operation");
-// 		} else if (s.equals("Print")) {
-// 			try {
-// 				// print the file
-// 				t.print();
-// 			} catch (Exception evt) {
-// 				JOptionPane.showMessageDialog(f, evt.getMessage());
-// 			}
-// 		} else if (s.equals("Open")) {
-// 			// Create an object of JFileChooser class
-// 			JFileChooser j = new JFileChooser("f:");
-
-// 			// Invoke the showsOpenDialog function to show the save dialog
-// 			int r = j.showOpenDialog(null);
-
-// 			// If the user selects a file
-// 			if (r == JFileChooser.APPROVE_OPTION) {
-// 				// Set the label to the path of the selected directory
-// 				File fi = new File(j.getSelectedFile().getAbsolutePath());
-
-// 				try {
-// 					// String
-// 					String s1 = "", sl = "";
-
-// 					// File reader
-// 					FileReader fr = new FileReader(fi);
-
-// 					// Buffered reader
-// 					BufferedReader br = new BufferedReader(fr);
-
-// 					// Initilize sl
-// 					sl = br.readLine();
-
-// 					// Take the input from the file
-// 					while ((s1 = br.readLine()) != null) {
-// 						sl = sl + "\n" + s1;
-// 					}
-
-// 					// Set the text
-// 					t.setText(sl);
-// 				} catch (Exception evt) {
-// 					JOptionPane.showMessageDialog(f, evt.getMessage());
-// 				}
-// 			}
-// 			// If the user cancelled the operation
-// 			else
-// 				JOptionPane.showMessageDialog(f, "the user cancelled the operation");
-// 		} else if (s.equals("New")) {
-// 			t.setText("");
-// 		} else if (s.equals("close")) {
-// 			f.setVisible(false);
-// 		}
-// 	}
-
 	// Main class
 	public static void main(String args[]) {
 		editor e = new editor();
 	}
+
+	// If a button is pressed
+	public void actionPerformed(ActionEvent e) {
+		String s = e.getActionCommand();
+
+		if (s.equals("cut")) {
+			t.cut();
+		} else if (s.equals("copy")) {
+			t.copy();
+		} else if (s.equals("paste")) {
+			t.paste();
+		} else if (s.equals("Save")) {
+			// Create an object of JFileChooser class
+			JFileChooser j = new JFileChooser("f:");
+
+			// Invoke the showsSaveDialog function to show the save dialog
+			int r = j.showSaveDialog(null);
+
+			if (r == JFileChooser.APPROVE_OPTION) {
+
+				// Set the label to the path of the selected directory
+				File fi = new File(j.getSelectedFile().getAbsolutePath());
+
+				try {
+					// Create a file writer
+					FileWriter wr = new FileWriter(fi, false);
+
+					// Create buffered writer to write
+					BufferedWriter w = new BufferedWriter(wr);
+
+					// Write
+					w.write(t.getText());
+
+					w.flush();
+					w.close();
+				} catch (Exception evt) {
+					JOptionPane.showMessageDialog(f, evt.getMessage());
+				}
+			}
+			// If the user cancelled the operation
+			else
+				JOptionPane.showMessageDialog(f, "the user cancelled the operation");
+		}
+		// else if (s.equals("Print")) {
+		// try {
+		// // print the file
+		// t.print();
+		// } catch (Exception evt) {
+		// JOptionPane.showMessageDialog(f, evt.getMessage());
+		// }
+		// } else if (s.equals("Open")) {
+		// // Create an object of JFileChooser class
+		// JFileChooser j = new JFileChooser("f:");
+
+		// // Invoke the showsOpenDialog function to show the save dialog
+		// int r = j.showOpenDialog(null);
+
+		// // If the user selects a file
+		// if (r == JFileChooser.APPROVE_OPTION) {
+		// // Set the label to the path of the selected directory
+		// File fi = new File(j.getSelectedFile().getAbsolutePath());
+
+		// try {
+		// // String
+		// String s1 = "", sl = "";
+
+		// // File reader
+		// FileReader fr = new FileReader(fi);
+
+		// // Buffered reader
+		// BufferedReader br = new BufferedReader(fr);
+
+		// // Initilize sl
+		// sl = br.readLine();
+
+		// // Take the input from the file
+		// while ((s1 = br.readLine()) != null) {
+		// sl = sl + "\n" + s1;
+		// }
+
+		// // Set the text
+		// t.setText(sl);
+		// } catch (Exception evt) {
+		// JOptionPane.showMessageDialog(f, evt.getMessage());
+		// }
+		// }
+		// // If the user cancelled the operation
+		// else
+		// JOptionPane.showMessageDialog(f, "the user cancelled the operation");
+		// } else if (s.equals("New")) {
+		// t.setText("");
+		// } else if (s.equals("close")) {
+		// f.setVisible(false);
+		// }
+	}
+
 }
