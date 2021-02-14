@@ -62,7 +62,7 @@ public class TwoPassAssembler {
 		// System.out.println("POT:");
 		// System.out.println(POT);
 		int loc_counter = 0, temp = 0, temp1 = 0, temp2 = 0, index = 0, flag = 0, idx = 0, address = 0, temp3 = 0;
-		Scanner sc = new Scanner("input");
+		Scanner sc = new Scanner("input.txt");
 		while (sc.hasNextLine()) {
 			String line = sc.nextLine();
 			String strings[] = line.split(" ");

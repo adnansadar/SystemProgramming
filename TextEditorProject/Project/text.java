@@ -37,7 +37,7 @@ public class text {
 			}
 		});
 	}
-
+// Nikhil
 	private void createAndShowGUI() {
 
 		frame = new JFrame(ProjectTitle);
@@ -79,7 +79,7 @@ public class text {
 		undoButton.addActionListener(new UndoActionListener(UndoActionType.UNDO));
 		JButton redoButton = new JButton("Redo");
 		redoButton.addActionListener(new UndoActionListener(UndoActionType.REDO));
-
+// Akash
 		JPanel panel1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		panel1.add(cutButton);
 		panel1.add(copyButton);
@@ -110,7 +110,7 @@ public class text {
 
 		jtextpane.requestFocusInWindow();
 	}
-
+// Yash
 	private StyledDocument getNewDocument() {
 
 		StyledDocument doc = new DefaultStyledDocument();
@@ -135,7 +135,7 @@ public class text {
 			undoManager.addEdit(e.getEdit()); // remember the edit
 		}
 	}
-
+// Pratik
 	private class UndoActionListener implements ActionListener {
 
 		private UndoActionType undoActionType;

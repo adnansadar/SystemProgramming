@@ -14,7 +14,7 @@ public class SymbolTable {
 		// read from FileReader till the end of file
 		// Filling the Symbol Table
 		while (sc.hasNext()) {
-			String string = sc.next();`
+			String string = sc.next();
 			stringnext = sc.next();
 			if (string.equals("int")) {
 				stringnext = stringnext.substring(0, stringnext.length() - 1);// have to reassign as strings are

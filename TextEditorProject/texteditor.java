@@ -13,36 +13,27 @@ import java.util.*;
 
 public class texteditor {
 
-	private JFrame frame__;
-	private JTextPane editor__;
-	// private JComboBox<String> fontSizeComboBox__;
-	// private JComboBox<String> textAlignComboBox__;
-	// private JComboBox<String> fontFamilyComboBox__;
-	private UndoManager undoMgr__;
+	private JFrame frame;
+	private JTextPane editor;
+	private JComboBox<String> FontSizeComboBox;
+	private JComboBox<String> TextAlignComboBox;
+	private UndoManager UndoManager;
 
 	enum UndoActionType {
 		UNDO, REDO
 	};
 
-	// is at the first text position after the number (number + dot + space).
+	private static final String MainTitle = "SIMPLE TEXT EDITOR";
+	private static final String DefaultFontFamily = "SansSerif";
+	private static final int DefaultFontSize = 18;
 
-	private static final String MAIN_TITLE = "My Editor 3";
-	private static final String DEFAULT_FONT_FAMILY = "SansSerif";
-	private static final int DEFAULT_FONT_SIZE = 18;
-	// private static final List<String> FONT_LIST = Arrays
-	// .asList(new String[] { "Arial", "Calibri", "Cambria", "Courier New", "Comic
-	// Sans MS", "Dialog", "Georgia",
-	// "Helevetica", "Lucida Sans", "Monospaced", "Tahoma", "Times New Roman",
-	// "Verdana" });
-	// private static final String[] FONT_SIZES = { "Font Size", "12", "14", "16",
-	// "18", "20", "22", "24", "26", "28",
-	// "30" };
-	// private static final String[] TEXT_ALIGNMENTS = { "Text Align", "Left",
-	// "Center", "Right", "Justified" };
+	private static final String[] FontSizes = { "Font Size", "12", "14", "16", "18", "20", "22", "24", "26", "28",
+			"30" };
+	private static final String[] TextAlignments = { "Text Align", "Left", "Center", "Right", "Justified" };
 
 	public static void main(String[] args) throws Exception {
 
-		UIManager.put("TextPane.font", new Font(DEFAULT_FONT_FAMILY, Font.PLAIN, DEFAULT_FONT_SIZE));
+		UIManager.put("TextPane.font", new Font(DefaultFontFamily, Font.PLAIN, DefaultFontSize));
 		UIManager.setLookAndFeel(new NimbusLookAndFeel());
 
 		SwingUtilities.invokeLater(new Runnable() {
@@ -56,13 +47,13 @@ public class texteditor {
 
 	private void createAndShowGUI() {
 
-		frame__ = new JFrame(MAIN_TITLE);
-		editor__ = new JTextPane();
-		JScrollPane editorScrollPane = new JScrollPane(editor__);
+		frame = new JFrame(MainTitle);
+		editor = new JTextPane();
+		JScrollPane editorScrollPane = new JScrollPane(editor);
 
-		editor__.setDocument(getNewDocument());
+		editor.setDocument(getNewDocument());
 
-		undoMgr__ = new UndoManager();
+		UndoManager = new UndoManager();
 		EditButtonActionListener editButtonActionListener = new EditButtonActionListener();
 
 		JButton cutButton = new JButton(new CutAction());
@@ -91,22 +82,13 @@ public class texteditor {
 		underlineButton.setText("Underline");
 		underlineButton.addActionListener(editButtonActionListener);
 
-		// JButton colorButton = new JButton("Set Color");
-		// colorButton.addActionListener(new ColorActionListener());
+		TextAlignComboBox = new JComboBox<String>(TextAlignments);
+		TextAlignComboBox.setEditable(false);
+		TextAlignComboBox.addItemListener(new TextAlignItemListener());
 
-		// textAlignComboBox__ = new JComboBox<String>(TEXT_ALIGNMENTS);
-		// textAlignComboBox__.setEditable(false);
-		// textAlignComboBox__.addItemListener(new TextAlignItemListener());
-
-		// fontSizeComboBox__ = new JComboBox<String>(FONT_SIZES);
-		// fontSizeComboBox__.setEditable(false);
-		// fontSizeComboBox__.addItemListener(new FontSizeItemListener());
-
-		// Vector<String> editorFonts = getEditorFonts();
-		// editorFonts.add(0, "Font Family");
-		// fontFamilyComboBox__ = new JComboBox<String>(editorFonts);
-		// fontFamilyComboBox__.setEditable(false);
-		// fontFamilyComboBox__.addItemListener(new FontFamilyItemListener());
+		FontSizeComboBox = new JComboBox<String>(FontSizes);
+		FontSizeComboBox.setEditable(false);
+		FontSizeComboBox.addItemListener(new FontSizeItemListener());
 
 		JButton undoButton = new JButton("Undo");
 		undoButton.addActionListener(new UndoActionListener(UndoActionType.UNDO));
@@ -121,14 +103,10 @@ public class texteditor {
 		panel1.add(boldButton);
 		panel1.add(italicButton);
 		panel1.add(underlineButton);
-		// panel1.add(new JSeparator(SwingConstants.VERTICAL));
-		// panel1.add(colorButton);
-		// panel1.add(new JSeparator(SwingConstants.VERTICAL));
-		// panel1.add(textAlignComboBox__);
-		// panel1.add(new JSeparator(SwingConstants.VERTICAL));
-		// panel1.add(fontSizeComboBox__);
-		// panel1.add(new JSeparator(SwingConstants.VERTICAL));
-		// panel1.add(fontFamilyComboBox__);
+		panel1.add(new JSeparator(SwingConstants.VERTICAL));
+		panel1.add(TextAlignComboBox);
+		panel1.add(new JSeparator(SwingConstants.VERTICAL));
+		panel1.add(FontSizeComboBox);
 
 		JPanel panel2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		panel2.add(new JSeparator(SwingConstants.VERTICAL));
@@ -141,15 +119,15 @@ public class texteditor {
 		toolBarPanel.add(panel1);
 		toolBarPanel.add(panel2);
 
-		frame__.add(toolBarPanel, BorderLayout.NORTH);
-		frame__.add(editorScrollPane, BorderLayout.CENTER);
+		frame.add(toolBarPanel, BorderLayout.NORTH);
+		frame.add(editorScrollPane, BorderLayout.CENTER);
 
-		frame__.setSize(900, 500);
-		frame__.setLocation(150, 80);
-		frame__.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame__.setVisible(true);
+		frame.setSize(900, 500);
+		frame.setLocation(150, 80);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 
-		editor__.requestFocusInWindow();
+		editor.requestFocusInWindow();
 	}
 
 	private StyledDocument getNewDocument() {
@@ -159,122 +137,65 @@ public class texteditor {
 		return doc;
 	}
 
-	private Vector<String> getEditorFonts() {
-
-		String[] availableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-		Vector<String> returnList = new Vector<>();
-
-		for (String font : availableFonts) {
-
-			if (FONT_LIST.contains(font)) {
-
-				returnList.add(font);
-			}
-		}
-
-		return returnList;
-	}
-
 	private class EditButtonActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			editor__.requestFocusInWindow();
+			editor.requestFocusInWindow();
 		}
 	}
-
-	// private class ColorActionListener implements ActionListener {
-
-	// public void actionPerformed(ActionEvent e) {
-
-	// Color newColor = JColorChooser.showDialog(frame__, "Choose a color",
-	// Color.BLACK);
-	// if (newColor == null) {
-
-	// editor__.requestFocusInWindow();
-	// return;
-	// }
-
-	// SimpleAttributeSet attr = new SimpleAttributeSet();
-	// StyleConstants.setForeground(attr, newColor);
-	// editor__.setCharacterAttributes(attr, false);
-	// editor__.requestFocusInWindow();
-	// }
-	// }
-
-	// private class TextAlignItemListener implements ItemListener {
-
-	// public void itemStateChanged(ItemEvent e) {
-
-	// if ((e.getStateChange() != ItemEvent.SELECTED) ||
-	// (textAlignComboBox__.getSelectedIndex() == 0)) {
-
-	// return;
-	// }
-
-	// String alignmentStr = (String) e.getItem();
-	// int newAlignment = textAlignComboBox__.getSelectedIndex() - 1;
-	// // New alignment is set based on these values defined in StyleConstants:
-	// // ALIGN_LEFT 0, ALIGN_CENTER 1, ALIGN_RIGHT 2, ALIGN_JUSTIFIED 3
-	// textAlignComboBox__.setAction(new AlignmentAction(alignmentStr,
-	// newAlignment));
-	// textAlignComboBox__.setSelectedIndex(0); // initialize to (default) select
-	// editor__.requestFocusInWindow();
-	// }
-	// } // TextAlignItemListener
-
-	// private class FontSizeItemListener implements ItemListener {
-
-	// public void itemStateChanged(ItemEvent e) {
-
-	// if ((e.getStateChange() != ItemEvent.SELECTED) ||
-	// (fontSizeComboBox__.getSelectedIndex() == 0)) {
-
-	// return;
-	// }
-
-	// String fontSizeStr = (String) e.getItem();
-	// int newFontSize = 0;
-
-	// try {
-	// newFontSize = Integer.parseInt(fontSizeStr);
-	// } catch (NumberFormatException ex) {
-
-	// return;
-	// }
-
-	// fontSizeComboBox__.setAction(new FontSizeAction(fontSizeStr, newFontSize));
-	// fontSizeComboBox__.setSelectedIndex(0); // initialize to (default) select
-	// editor__.requestFocusInWindow();
-	// }
-	// } // FontSizeItemListener
-
-	// private class FontFamilyItemListener implements ItemListener {
-
-	// public void itemStateChanged(ItemEvent e) {
-
-	// if ((e.getStateChange() != ItemEvent.SELECTED) ||
-	// (fontFamilyComboBox__.getSelectedIndex() == 0)) {
-
-	// return;
-	// }
-
-	// String fontFamily = (String) e.getItem();
-	// fontFamilyComboBox__.setAction(new FontFamilyAction(fontFamily, fontFamily));
-	// fontFamilyComboBox__.setSelectedIndex(0); // initialize to (default) select
-	// editor__.requestFocusInWindow();
-	// }
-	// } // FontFamilyItemListener
 
 	private class UndoEditListener implements UndoableEditListener {
 
 		@Override
 		public void undoableEditHappened(UndoableEditEvent e) {
 
-			undoMgr__.addEdit(e.getEdit()); // remember the edit
+			UndoManager.addEdit(e.getEdit()); // remember the edit
 		}
 	}
+
+	private class TextAlignItemListener implements ItemListener {
+
+		public void itemStateChanged(ItemEvent e) {
+
+			if ((e.getStateChange() != ItemEvent.SELECTED) || (TextAlignComboBox.getSelectedIndex() == 0)) {
+
+				return;
+			}
+
+			String alignmentStr = (String) e.getItem();
+			int newAlignment = TextAlignComboBox.getSelectedIndex() - 1;
+			// Align LEFT is 0, CENTER is 1, RIGHT is 2, JUSTIFIED is 3
+			TextAlignComboBox.setAction(new AlignmentAction(alignmentStr, newAlignment));
+			TextAlignComboBox.setSelectedIndex(0); // initialize to (default) select
+			editor.requestFocusInWindow();
+		}
+	} // TextAlignItemListener
+
+	private class FontSizeItemListener implements ItemListener {
+
+		public void itemStateChanged(ItemEvent e) {
+
+			if ((e.getStateChange() != ItemEvent.SELECTED) || (FontSizeComboBox.getSelectedIndex() == 0)) {
+				return;
+			}
+
+			String fontSizeStr = (String) e.getItem();
+			int newFontSize = 0;
+
+			try {
+				newFontSize = Integer.parseInt(fontSizeStr);
+			} catch (NumberFormatException ex) {
+
+				return;
+			}
+
+			FontSizeComboBox.setAction(new FontSizeAction(fontSizeStr, newFontSize));
+			FontSizeComboBox.setSelectedIndex(0); // initialize to (default) select
+			editor.requestFocusInWindow();
+		}
+	} // FontSizeItemListener
 
 	private class UndoActionListener implements ActionListener {
 
@@ -291,27 +212,26 @@ public class texteditor {
 			switch (undoActionType) {
 
 				case UNDO:
-					if (!undoMgr__.canUndo()) {
+					if (!UndoManager.canUndo()) {
 
-						editor__.requestFocusInWindow();
+						editor.requestFocusInWindow();
 						return; // no edits to undo
 					}
 
-					undoMgr__.undo();
+					UndoManager.undo();
 					break;
 
 				case REDO:
-					if (!undoMgr__.canRedo()) {
+					if (!UndoManager.canRedo()) {
 
-						editor__.requestFocusInWindow();
+						editor.requestFocusInWindow();
 						return; // no edits to redo
 					}
 
-					undoMgr__.redo();
+					UndoManager.redo();
 			}
 
-			editor__.requestFocusInWindow();
+			editor.requestFocusInWindow();
 		}
 	} // UndoActionListener
-
 }
